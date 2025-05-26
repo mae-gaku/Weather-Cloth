@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>おすすめのコーディネート</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-10">
+        <h1 class="text-3xl font-bold mb-6 text-center">
+            「{{ category_name }}」スタイルのおすすめコーディネート
+        </h1>
+
+        <p class="text-center text-lg mb-10">
+            天気：{{ description }} / 最高気温：{{ temp_max }}℃ / 最低気温：{{ temp_min }}℃ / 降水確率：{{ pop }}%
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {% for item in recommendations %}
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}"
+                         class="w-full h-56 object-cover rounded-t-2xl">
+                    <div class="p-4 text-center">
+                        <h2 class="text-lg font-semibold mb-1">{{ item.name }}</h2>
+                        <p class="text-sm text-gray-600">{{ item.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/categories" class="text-blue-600 hover:underline">カテゴリを選び直す</a>
+        </div>
+    </div>
+</body>
+</html>

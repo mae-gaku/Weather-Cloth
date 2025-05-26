@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カテゴリを選択</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+        <h1 class="text-3xl font-bold mb-8 text-center">ファッションカテゴリを選んでください</h1>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {% for category in categories %}
+                <a href="/recommend/{{ category.slug }}" class="block bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300">
+                    <img src="{{ category.image_url }}" alt="{{ category.name }}"
+                         class="rounded-t-2xl w-full h-40 object-cover">
+                    <div class="p-4 text-center">
+                        <h2 class="text-lg font-semibold">{{ category.name }}</h2>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

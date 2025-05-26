@@ -25,3 +25,19 @@
 - [ ] データベース管理
 
 
+```sh
+uvicorn app.main:app --reload
+```
+
+```sh
+python3 init_db.py
+```
+
+
+
+```sh
+python3 -m app.models
+python3 -m app.seed_data
+python3 -m app.scripts.generate_training_data
+python3 -m app.scripts.train
+```

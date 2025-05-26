@@ -51,11 +51,23 @@
       {% endfor %}
     </div>
 
-    <!-- Outfit Suggestion -->
-    <div class="mt-12 p-5 bg-white bg-opacity-10 rounded-2xl shadow text-center">
-      <div class="text-lg font-semibold">今日のコーディネート提案</div>
-      <p class="mt-3 text-base leading-relaxed">{{ suggestion }}</p>
-    </div>
+        <!-- Outfit Suggestion -->
+        <div class="mt-12 p-5 bg-white bg-opacity-10 rounded-2xl shadow text-center">
+          <div class="text-lg font-semibold">今日のコーディネート提案</div>
+          <p class="mt-3 text-base leading-relaxed">{{ suggestion }}</p>
+        </div>
+    
+        <!-- Category Selection -->
+        <div class="mt-10 text-center">
+          <div class="text-sm text-blue-100 mb-2">カテゴリを選択:</div>
+          <div class="flex flex-wrap justify-center gap-3">
+            <a href="/outfits?category=カジュアル" class="px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30 transition">カジュアル</a>
+            <a href="/outfits?category=キレイめ" class="px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30 transition">キレイめ</a>
+            <a href="/outfits?category=ノームコア" class="px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30 transition">ノームコア</a>
+            <a href="/outfits?category=テック" class="px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30 transition">テック</a>
+          </div>
+        </div>
+    
 
   </div>
 </body>
