@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>サインアップ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-400 to-blue-600 text-white min-h-screen flex items-center justify-center px-4">
+
+  <div class="bg-white bg-opacity-10 p-6 rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md">
+    <h2 class="text-3xl font-bold mb-6 text-center text-white">新規登録</h2>
+
+    <form method="post" class="space-y-4">
+      <input
+        name="email"
+        type="email"
+        placeholder="メールアドレス"
+        required
+        class="w-full h-12 px-4 rounded-lg bg-white bg-opacity-20 text-white placeholder-white outline-none text-lg"
+      >
+      <input
+        name="password"
+        type="password"
+        placeholder="パスワード"
+        required
+        class="w-full h-12 px-4 rounded-lg bg-white bg-opacity-20 text-white placeholder-white outline-none text-lg"
+      >
+      <button
+        type="submit"
+        class="w-full h-12 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-100 transition text-lg"
+      >
+        登録
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-white text-sm">
+      既にアカウントがありますか？
+      <a href="/login" class="underline text-blue-100 hover:text-white">ログイン</a>
+    </p>
+  </div>
+
+</body>
+</html>

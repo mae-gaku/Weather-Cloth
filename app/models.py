@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 from app.database import Base
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String
+from .database import Base
 
 class Outfit(Base):
     __tablename__ = "outfits"
@@ -22,6 +24,13 @@ class Category(Base):
 
     outfits = relationship("Outfit", back_populates="category")
 
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
 
 # ↓↓↓↓ 追加する関数 ↓↓↓↓
