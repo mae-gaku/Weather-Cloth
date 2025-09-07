@@ -11,18 +11,25 @@
 
 </p>
 
-
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/eb7a1c4c-3cb7-4f33-9474-9e437eec24c8" alt="MBI Logo" width="300">
+  <img src="https://github.com/user-attachments/assets/41bb3c1f-2dc7-4da6-98ec-e202c8712e41" alt="MBI Logo" width="193" height="422" >
 </p>
 
+
+
+## 🚀 デモ
+
+👉 [GitHub Pages でアプリを見る](https://mae-gaku.github.io/Weather-Fasion.github.io/)
 
 ---
 
 ## ToDo
 - [ ] シンプルでUIデザイン
-- [ ] サインアップ・ログイン機能作成
+- [x] サインアップ・ログイン機能作成
 - [ ] データベース管理
+- [ ] 服装データ追加
+- [ ] 服装レコメンドAI機能
+- [ ] Try on AI開発
 
 
 ```sh
