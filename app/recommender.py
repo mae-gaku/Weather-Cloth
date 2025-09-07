@@ -2,6 +2,18 @@ from typing import List, Tuple
 from sqlalchemy.orm import Session
 from app.models import Outfit
 
+# app/recommender.py
+
+from .utils.ai_scorer import suggest_by_ai
+
+def generate_recommendation(weather, category):
+    score = suggest_by_ai(weather, category)
+    if score > 0.6:
+        return "今日はそのカテゴリに合った服がよくクリックされています。おすすめです！"
+    elif score > 0.3:
+        return "まあまあおすすめです。"
+    else:
+        return "今日は他のカテゴリの方が人気かもしれません。"
 
 def get_outfits_by_category(db: Session, category: str) -> List[Outfit]:
     """

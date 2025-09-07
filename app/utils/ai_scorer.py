@@ -58,3 +58,37 @@ def predict_click_probability(outfit, weather):
     proba = model.predict_proba(input_df)[0][1]  # clicked=1 の確率
     print("proba", proba)
     return proba
+
+
+
+# app/utils/ai_scorer.py
+
+import joblib
+import os
+import pandas as pd
+
+# モデルのロード
+model_path = os.path.join(os.path.dirname(__file__), "model.pkl")
+model = joblib.load(model_path)
+
+# カテゴリ変換（本番はDBに対応させる）
+CATEGORY_MAP = {
+    "カジュアル": 0,
+    "キレイめ": 1,
+    "ノームコア": 2,
+    "テック": 3
+}
+
+def suggest_by_ai(weather, category: str):
+    features = {
+        "temp_max": float(weather.get("temp_max", 25)),
+        "temp_min": float(weather.get("temp_min", 15)),
+        "pop": float(weather.get("today_pop", 0)),
+        "category": CATEGORY_MAP.get(category, -1),
+        "nylon_flag": 0,
+        "tshirt_flag": 0,
+        "jacket_flag": 0
+    }
+    input_df = pd.DataFrame([features])
+    prob = model.predict_proba(input_df)[0][1]
+    return prob

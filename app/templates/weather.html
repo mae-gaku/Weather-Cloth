@@ -25,7 +25,7 @@
 <body class="text-white font-sans min-h-screen weather-bg {% if data.weather_icon == 'sunny' %}weather-bg-sunny{% elif data.weather_icon == 'rainy' %}weather-bg-rainy{% elif data.weather_icon == 'cloudy' %}weather-bg-cloudy{% endif %}">
   <div class="bg-blue-600 bg-opacity-60 min-h-screen">
     <div class="max-w-md mx-auto pt-20 px-6">
-
+      
       <!-- City and Current Temp -->
       <div class="text-center mb-10">
         <div class="text-2xl font-light tracking-wide">{{ data.name }}</div>
@@ -33,6 +33,17 @@
         <div class="text-lg capitalize mt-2">{{ data.today_weather }} {{ data.weather_icon_emoji }}</div>
         <div class="text-sm text-blue-100">H:{{ data.temp_max }}°  L:{{ data.temp_min }}°</div>
       </div>
+
+
+
+      <!-- Location Buttons -->
+      <div class="flex justify-center space-x-3 mb-6">
+        <a href="/?location=東京" class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30">東京</a>
+        <a href="/?location=大阪" class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30">大阪</a>
+        <a href="/?location=札幌" class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30">札幌</a>
+        <a href="/?location=福岡" class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm hover:bg-opacity-30">福岡</a>
+      </div>
+
 
       <!-- Description -->
       <div class="text-center mb-6 text-sm text-blue-100 italic">

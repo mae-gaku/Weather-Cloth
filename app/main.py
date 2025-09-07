@@ -62,51 +62,148 @@ def suggest_outfit(weather_text: str, temp_max, temp_min, pop=None):
 
 
 
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request, db: Session = Depends(get_db)):
+#     user = get_current_user(request, db)
+#     if not user:
+#         return RedirectResponse("/login", status_code=302)
+# # @app.get("/", response_class=HTMLResponse)
+# # async def home(request: Request):
+#     weather_data = await get_weather_data()
+#     suggestion = suggest_outfit(
+#         weather_text=weather_data["today_weather"],
+#         temp_max=weather_data["temp_max"],
+#         temp_min=weather_data["temp_min"],
+#         pop=weather_data.get("today_pop")
+#     )
+#     return templates.TemplateResponse("weather.html", {
+#         "request": request,
+#         "data": weather_data,
+#         "description": weather_data["today_weather"],
+#         "suggestion": suggestion,
+#         "pop": weather_data.get("today_pop"),
+#         "hourly": [],
+#         "forecast": []
+#     })
+
+
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request, db: Session = Depends(get_db)):
+#     import random
+#     user = get_current_user(request, db)
+#     if not user:
+#         return RedirectResponse("/login", status_code=302)
+
+#     # --- 今日の天気データ (JMA API) ---
+#     weather_data = await get_weather_data()
+
+#     # --- ランダムで時間ごとの予報を作る ---
+#     weathers = [
+#         {"text": "晴れ", "icon_emoji": "☀️"},
+#         {"text": "曇り", "icon_emoji": "☁️"},
+#         {"text": "雨", "icon_emoji": "🌧️"},
+#     ]
+#     hourly = []
+#     for h in range(6):  # 6時間分
+#         hour = f"{(h*3)%24}時"
+#         temp = int(weather_data["temp_min"]) + (h * 2)
+#         w = weathers[(h + 1) % 3]
+#         hourly.append({"time": hour, "temp": temp, "icon_emoji": w["icon_emoji"]})
+
+#     # --- ランダムで週間予報を作る ---
+#     days = ["月","火","水","木","金","土","日"]
+#     forecast = []
+#     for d in days:
+#         min_temp = random.randint(5, 20)
+#         max_temp = min_temp + random.randint(5, 10)
+#         w = random.choice(weathers)
+#         forecast.append({
+#             "day": d,
+#             "min": min_temp,
+#             "max": max_temp,
+#             "icon_emoji": w["icon_emoji"],
+#             "range_percent": (max_temp - (-5)) * 2,  # バー表示用
+#         })
+
+#     # --- コーデ提案 ---
+#     suggestion = suggest_outfit(
+#         weather_text=weather_data["today_weather"],
+#         temp_max=weather_data["temp_max"],
+#         temp_min=weather_data["temp_min"],
+#         pop=weather_data.get("today_pop")
+#     )
+
+#     return templates.TemplateResponse("weather.html", {
+#         "request": request,
+#         "data": weather_data,
+#         "description": weather_data["today_weather"],
+#         "suggestion": suggestion,
+#         "pop": weather_data.get("today_pop"),
+#         "hourly": hourly,
+#         "forecast": forecast
+#     })
+
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request, db: Session = Depends(get_db)):
+async def home(
+    request: Request,
+    location: str = Query("東京"),
+    db: Session = Depends(get_db)
+):
+    import random
     user = get_current_user(request, db)
     if not user:
         return RedirectResponse("/login", status_code=302)
-# @app.get("/", response_class=HTMLResponse)
-# async def home(request: Request):
-    weather_data = await get_weather_data()
+
+    # --- 選択された場所の天気データを取得 ---
+    weather_data = await get_weather_data(location)
+
+    # --- ダミー時間別予報 ---
+    weathers = [
+        {"text": "晴れ", "icon_emoji": "☀️"},
+        {"text": "曇り", "icon_emoji": "☁️"},
+        {"text": "雨", "icon_emoji": "🌧️"},
+    ]
+    hourly = []
+    for h in range(6):
+        hour = f"{(h*3)%24}時"
+        temp = int(weather_data["temp_min"]) + (h * 2)
+        w = weathers[(h + 1) % 3]
+        hourly.append({"time": hour, "temp": temp, "icon_emoji": w["icon_emoji"]})
+
+    # --- ダミー週間予報 ---
+    days = ["月","火","水","木","金","土","日"]
+    forecast = []
+    for d in days:
+        min_temp = random.randint(5, 20)
+        max_temp = min_temp + random.randint(5, 10)
+        w = random.choice(weathers)
+        forecast.append({
+            "day": d,
+            "min": min_temp,
+            "max": max_temp,
+            "icon_emoji": w["icon_emoji"],
+            "range_percent": (max_temp - (-5)) * 2,
+        })
+
     suggestion = suggest_outfit(
         weather_text=weather_data["today_weather"],
         temp_max=weather_data["temp_max"],
         temp_min=weather_data["temp_min"],
         pop=weather_data.get("today_pop")
     )
+
     return templates.TemplateResponse("weather.html", {
         "request": request,
         "data": weather_data,
         "description": weather_data["today_weather"],
         "suggestion": suggestion,
         "pop": weather_data.get("today_pop"),
-        "hourly": [],
-        "forecast": []
+        "hourly": hourly,
+        "forecast": forecast,
+        "location": location
     })
 
-
 from app.utils.ai_scorer import predict_click_probability  # ← AIモデルベースのスコア関数
-
-# @app.get("/outfits", response_class=HTMLResponse)
-# async def outfits(request: Request, category: str, db: Session = Depends(get_db)):
-#     weather_data = await get_weather_data()
-#     outfits = db.query(Outfit).filter(Outfit.category.has(name=category)).all()
-
-#     # AIでスコア算出
-#     scored_outfits = sorted(
-#         outfits,
-#         key=lambda o: ai_score_outfit(o, weather_data, category),
-#         reverse=True
-#     )
-
-#     return templates.TemplateResponse("outfits.html", {
-#         "request": request,
-#         "outfits": scored_outfits,
-#         "category": f"{category}（おすすめ）",
-#     })
-
 
 # XGBoostモデルとエンコーダは起動時に読み込み
 @app.get("/outfits", response_class=HTMLResponse)
